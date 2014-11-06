@@ -79,14 +79,14 @@ describe("Prueba Player Missile", function(){
 		board.step(0);
 		Game.keys['fire'] = true;
 		board.step(1);
-		expect(board.objects.length).toBe(3);
+		expect(board.objects.length).toBe(1);
 		board.step(0.4);				
-		expect(board.objects.length).toBe(3);  //esperamos que no haya nuevos misiles pese a no dejar de pulsar fire
+		expect(board.objects.length).toBe(1);  //esperamos que no haya nuevos misiles pese a no dejar de pulsar fire
 		Game.keys['fire'] = false;
 		board.step(0);
 		Game.keys['fire'] = true;
 		board.step(0);
-		expect(board.objects.length).toBe(5);
+		expect(board.objects.length).toBe(3);
 	});
 
 
