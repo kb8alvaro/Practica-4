@@ -132,13 +132,3 @@ describe("Prueba Enemy", function(){
 
 });
 
-/*
-
-// Metodo draw, que anadimos al prototipo para que cada instancia de
-// Enemy no tenga una copia de el
-Enemy.prototype.draw = function(ctx) {
-    SpriteSheet.draw(ctx,this.sprite,this.x,this.y);
-}
-
-*/
-

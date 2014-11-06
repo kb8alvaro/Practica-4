@@ -4,7 +4,8 @@ var sprites = {
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
-    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 }
+    enemy_circle: { sx: 158, sy: 0, w: 32, h: 33, frames: 1 },
+    explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
 };
 
 
@@ -143,15 +144,21 @@ var PlayerShip = function() {
 	}
 
 	this.reload-=dt;
-	if(Game.keys['fire'] && this.reload < 0) {
+	if(Game.keys['fire'] && this.up) {
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    Game.keys['fire'] = false;
 	    this.reload = this.reloadTime;
+			this.up = false;
 
 	    // Se añaden al gameboard 2 misiles 
 	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	}
+	if(!Game.keys['fire'] && this.reload < 0) {
+		this.up = true;
+	}
+	if(Game.keys['FBright']) {this.board.add(new FireBall(this.x+this.w, this.y+this.h/2, 1))}
+	if(Game.keys['FBleft']) {this.board.add(new FireBall(this.x, this.y+this.h/2, -1))}
+
     }
 
     this.draw = function(ctx) {
@@ -278,6 +285,31 @@ Enemy.prototype.step = function(dt) {
 Enemy.prototype.draw = function(ctx) {
     SpriteSheet.draw(ctx,this.sprite,this.x,this.y);
 }
+
+// bola de fuego. x e y son la posicion
+// z es la direccion( 1: derecha, -1: izquierda)
+var FireBall = function(x,y,z) {
+    this.w = SpriteSheet.map['explosion'].w;
+    this.h = SpriteSheet.map['explosion'].h;
+    this.x = x - this.w/2;
+    this.y = y - this.h;
+    this.vy = -200;
+    this.vx = 40*z;
+};
+
+FireBall.prototype.step = function(dt)  {
+    var g = 150;		//coeficiente de gravedad
+    this.vy += g*dt
+    this.y += this.vy * dt;
+    this.x += this.vx * dt;
+    if(this.y > Game.height) { this.board.remove(this); }
+};
+
+FireBall.prototype.draw = function(ctx)  {
+    SpriteSheet.draw(ctx,'explosion',this.x,this.y,0);
+};
+
+
 
 
 
