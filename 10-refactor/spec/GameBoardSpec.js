@@ -56,3 +56,74 @@
     colisionado con objetos de cierto tipo, no con todos los objetos.
 
 */
+
+describe("Prueba Game Board", function(){
+
+	it("GameBoard.add()", function(){
+		var gb = new GameBoard();
+		gb.add(4);
+		expect(gb.objects[0]).toEqual(4);
+	});
+
+	it("Metodos de borrado (GameBoard.remove(), GameBoard.resetRemoved() y GameBoard.finalizeRemoved()", function(){
+		var gb = new GameBoard();
+		gb.add(4);
+		spyOn(gb, "resetRemoved").andCallThrough();
+		gb.resetRemoved();
+		expect(gb.resetRemoved).toHaveBeenCalled();
+		gb.remove(4);
+		expect(gb.removed.length).toEqual(1);
+		gb.finalizeRemoved();
+		expect(gb.objects.length).toEqual(0);	
+	});
+
+	it("GameBoard.iterate()", function(){
+		var gb = new GameBoard();
+		var dummy = {
+			doThings: function(){}
+		};
+		spyOn(dummy, "doThings").andCallThrough();
+		gb.add(dummy);
+		gb.iterate('doThings');
+		expect(dummy.doThings).toHaveBeenCalled();
+	});
+
+	it("GameBoard.step()", function(){
+		var gb = new GameBoard();
+		spyOn(gb, "step").andCallThrough();
+		gb.step();
+		expect(gb.step).toHaveBeenCalled();
+	});
+
+	it("GameBoard.draw()", function(){
+		var gb = new GameBoard();
+		spyOn(gb, "draw").andCallThrough();
+		gb.draw();
+		expect(gb.draw).toHaveBeenCalled();
+	});
+
+	it("GameBoard.overlap()", function(){
+		var gb = new GameBoard();
+		var r1 = { x:0, y:0, h:3, w:3};
+		var r2 = { x:2, y:2, h:4, w:5};
+		var r3 = { x:4, y:4, h:1, w:3};
+		expect(gb.overlap(r1,r2)).toBeTruthy();
+		expect(gb.overlap(r1,r3)).toBeFalsy();
+		expect(gb.overlap(r2,r3)).toBeTruthy();
+	});
+
+	it("GameBoard.collide()", function(){
+		var gb = new GameBoard();
+		var r1 = { x:0, y:0, h:3, w:3};
+		var r2 = { x:2, y:2, h:4, w:5};
+		var r3 = { x:4, y:4, h:1, w:3};
+		gb.add(r1);
+		gb.add(r2);
+		gb.add(r3);
+		expect(gb.collide(r2)).toEqual(r1);
+		expect(gb.collide(r3)).toEqual(r2);
+	});
+
+});
+
+

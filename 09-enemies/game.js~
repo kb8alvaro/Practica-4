@@ -14,7 +14,6 @@ var enemies = {
     // variable baseParameters del constructor Enemy(). Ver
     // comentarios en el código del constructor al final del fichero.
     basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
-
 };
 
 
@@ -42,7 +41,6 @@ var playGame = function() {
     board.add(new PlayerShip());
     Game.setBoard(3,board);
 }
-
 
 
 // Si se construye con clear==true no se pintan estrellas con fondo
@@ -289,11 +287,10 @@ Enemy.prototype.draw = function(ctx) {
 // bola de fuego. x e y son la posicion
 // z es la direccion( 1: derecha, -1: izquierda)
 var FireBall = function(x,y,z) {
-console.log("creo bola de fuego");
     this.w = SpriteSheet.map['explosion'].w;
     this.h = SpriteSheet.map['explosion'].h;
-    this.x = x;
-    this.y = y;
+    this.x = x - this.w/2;
+    this.y = y - this.h;
     this.vy = -200;
     this.vx = 40*z;
 };

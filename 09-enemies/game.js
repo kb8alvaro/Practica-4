@@ -13,8 +13,7 @@ var enemies = {
     // B, C y E substituirán a los valores por defecto definidos en la
     // variable baseParameters del constructor Enemy(). Ver
     // comentarios en el código del constructor al final del fichero.
-    basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
-
+    basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2, E: 100 }
 };
 
 
@@ -42,7 +41,6 @@ var playGame = function() {
     board.add(new PlayerShip());
     Game.setBoard(3,board);
 }
-
 
 
 // Si se construye con clear==true no se pintan estrellas con fondo

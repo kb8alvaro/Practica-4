@@ -266,8 +266,6 @@ var FireBall = function(x,y,z) {
     this.y = y - this.h;
 };
 
-FireBall.prototype = new Sprite();
-
 FireBall.prototype.step = function(dt)  {
     var g = 150;		//coeficiente de gravedad
     this.vy += g*dt
@@ -276,6 +274,7 @@ FireBall.prototype.step = function(dt)  {
     if(this.y > Game.height) { this.board.remove(this); }
 };
 
+FireBall.prototype = new Sprite();
 
 
 $(function() {
