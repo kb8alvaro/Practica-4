@@ -89,6 +89,23 @@ describe("Prueba Enemy", function(){
 		expect(e2.x).toEqual(200);
 	});
 
+	it("Enemy.step", function(){
+		SpriteSheet = { map: {
+					missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+					enemy_test:   { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }
+					 } };
+		var enemies = {
+			basic: { x: 100, y: -50, sprite: 'enemy_test', B: 100, C: 2 , E: 100 }
+		};
+		var board = new GameBoard();
+		var e = new Enemy(enemies.basic);
+		board.add(e);
+		board.resetRemoved();
+		e.step(2);
+		expect(e.x).toEqual(-51.36049906158564);
+		expect(e.y).toEqual(150);
+	});
+
 
 });
 
